@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MySupportLib</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_vpndemo">VPNDemo</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_next">Next</string>
 </resources>

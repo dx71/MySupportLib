@@ -1,5 +1,8 @@
 package com.bb.dongx.mysupportlib;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,17 +12,34 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import com.bb.dongx.mysupportlib.vpndemo.VPNDemo;
 
 public class MainActivity extends AppCompatActivity {
     private static final String   TAG="MainActivity";
+    private Button  mNext_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+/*
+        //FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            fragment = new MainActivityFragment();
+            fm.beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
+        }
+  */
+
 
         Log.d(TAG, "onCreate() called");
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

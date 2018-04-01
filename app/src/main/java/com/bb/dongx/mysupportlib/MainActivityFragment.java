@@ -14,7 +14,7 @@ import com.bb.dongx.mysupportlib.stock.StockActivity;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    private Button mNext_btn;
+    private Button mStockList_btn;
     public MainActivityFragment() {
     }
 
@@ -25,9 +25,9 @@ public class MainActivityFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_main, container, false);
         //return inflater.inflate(R.layout.content_main, container, false);
 
-        mNext_btn = (Button) v.findViewById(R.id.next_button);
+        mStockList_btn = (Button) v.findViewById(R.id.stocklist_button);
 
-        mNext_btn.setOnClickListener(new View.OnClickListener() {
+        mStockList_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), StockActivity.class);
                 startActivity(i);

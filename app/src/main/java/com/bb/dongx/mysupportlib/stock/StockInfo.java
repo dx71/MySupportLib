@@ -7,6 +7,7 @@ package com.bb.dongx.mysupportlib.stock;
 public class StockInfo {
     String   mStockID;
     String   mStockData;
+    String   mStockAllInfo;
 
     public String getStockId()
     {
@@ -26,4 +27,14 @@ public class StockInfo {
     {
         mStockData = data;
     }
+
+    public String getStockAllInfo()
+    {
+        return mStockAllInfo;
+    }
+    public void  setStockAllInfo(String data)
+    {
+        mStockAllInfo = data;
+    }
+
 }

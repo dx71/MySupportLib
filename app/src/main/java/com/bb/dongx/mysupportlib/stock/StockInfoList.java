@@ -23,6 +23,7 @@ public class StockInfoList {
     }
     private StockInfoList(Context context) {
         mStockInfos = new ArrayList<>();
+        /*
         for (int i = 0; i < 100; i++) {
             StockInfo si = new StockInfo();
             si.setStockId(Integer.toString(i));
@@ -30,6 +31,7 @@ public class StockInfoList {
             si.setStockData((df.format(new Date())));
             mStockInfos.add(si);
         }
+        */
     }
 
     public List<StockInfo> getStockInfos() {
@@ -43,6 +45,17 @@ public class StockInfoList {
             }
         }
         return null;
+    }
+
+    public void addStockInfo(StockInfo item) {
+            mStockInfos.add(item);
+        return ;
+    }
+    public void addStockInfoByID(String stockid) {
+        StockInfo si = new StockInfo();
+        si.setStockId(stockid);
+        mStockInfos.add(si);
+        return ;
     }
 
 }

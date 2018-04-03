@@ -15,6 +15,7 @@ import com.bb.dongx.mysupportlib.stock.StockActivity;
  */
 public class MainActivityFragment extends Fragment {
     private Button mStockList_btn;
+    private Button mGetData_btn;
     public MainActivityFragment() {
     }
 
@@ -31,6 +32,15 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), StockActivity.class);
                 startActivity(i);
+            }
+        });
+
+
+        mGetData_btn = (Button) v.findViewById(R.id.get_data_button);
+
+        mGetData_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
             }
         });
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by dongx on 2018/4/2.
@@ -35,5 +36,15 @@ public class SinaStockDataFetch {
     }
     public String getUrlString(String urlSpec) throws IOException {
         return new String(getUrlBytes(urlSpec));
+    }
+
+    public String fetchRecentPhotos() {
+        //String url = buildUrl(FETCH_RECENTS_METHOD, null);
+        return  new String(getUrlBytes("sh600198"));
+    }
+
+    public String searchPhotos(String query) {
+        //String url = buildUrl(SEARCH_METHOD, query);
+        return   new String(getUrlBytes(query));
     }
 }

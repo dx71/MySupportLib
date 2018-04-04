@@ -1,5 +1,7 @@
 package com.bb.dongx.mysupportlib.stock;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,8 +13,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,12 +42,14 @@ public class StockActivity extends AppCompatActivity {
         @Override
         protected StockInfo doInBackground(String... params) {
             try {
+
                 String result = new SinaStockDataFetch()
                         .getUrlString("http://hq.sinajs.cn/list="+params[0]);
                 Log.i(TAG, "Fetched contents of URL: " + result);
-                StockInfo si = new StockInfo();
-                si.setStockAllInfo(result);
 
+                siList.addStockInfoByID(params[0]);
+                StockInfo si = siList.getStockInfo(params[0]);
+                si.setStockAllInfo(result);
                 return si;
             } catch (IOException ioe) {
                 Log.e(TAG, "Failed to fetch URL: ", ioe);
@@ -51,7 +59,7 @@ public class StockActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(StockInfo item) {
-            siList.addStockInfo(item);
+            //siList.addStockInfo(item);
             updateUI() ;
         }
 
@@ -66,12 +74,13 @@ public class StockActivity extends AppCompatActivity {
         mStockRecyclerView = (RecyclerView)findViewById(R.id.stock_recycler_view);
         //mStockRecyclerView.setLayoutManager(new LinearLayoutManager(StockActivity.this));
         mStockRecyclerView.setLayoutManager( new GridLayoutManager(this, 3));
-
         siList = StockInfoList.get(StockActivity.this);
+/*
         siList.addStockInfoByID(getResources().getString(R.string.sh601006));
         siList.addStockInfoByID(getResources().getString(R.string.sh600198));
         siList.addStockInfoByID(getResources().getString(R.string.sh601880));
         siList.addStockInfoByID(getResources().getString(R.string.sh601398));
+*/
         Handler responseHandler = new Handler();
         mThumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
         mThumbnailDownloader.setThumbnailDownloadListener(
@@ -87,6 +96,8 @@ public class StockActivity extends AppCompatActivity {
         mThumbnailDownloader.getLooper();
         Log.i(TAG, "Background thread started");
 
+        updateItems();
+        //new FetchItemsTask().execute(getResources().getString(R.string.sh601006));
        // FetchItemsTask fit = new FetchItemsTask();
         /*
         new FetchItemsTask().execute(getResources().getString(R.string.sh601006));
@@ -97,6 +108,49 @@ public class StockActivity extends AppCompatActivity {
         */
         updateUI();
 
+    }
+    private void updateItems() {
+        //String query = QueryPreferences.getStoredQuery(getActivity());
+        new FetchItemsTask().execute(getResources().getString(R.string.sh601006));
+    }
+
+    @Override
+    public boolean  onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.search  , menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "QueryTextSubmit: " + s);
+                updateItems();
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Log.d(TAG, "QueryTextChange: " + s);
+                return false;
+            }
+        });
+        //return true;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_clear:
+                QueryPreferences.setStoredQuery(this, null);
+                updateItems();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static Intent newIntent(Context context) {
+        return new Intent(this,context);
     }
 
 

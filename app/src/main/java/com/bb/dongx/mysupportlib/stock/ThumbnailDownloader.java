@@ -79,7 +79,8 @@ public class ThumbnailDownloader<T> extends HandlerThread {
             if (url == null) {
                 return;
             }
-
+            //byte[] ddBytes = new SinaStockDataFetch().getUrlBytes("https://image.baidu.com/");
+            //Log.i(TAG, String.valueOf(ddBytes));
             byte[] bitmapBytes = new SinaStockDataFetch().getUrlBytes("http://image.sinajs.cn/newchart/daily/n/"+url+".gif");
             final Bitmap bitmap = BitmapFactory
                     .decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
